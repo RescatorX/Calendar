@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace Calendar
 {
@@ -20,7 +21,15 @@ namespace Calendar
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                    .ConfigureLogging(l =>
+                    {
+                        l.AddSerilog(new LoggerConfiguration()
+                            .Enrich.FromLogContext()
+                            .WriteTo.File("log.txt")
+                            .CreateLogger());
+                    })
+                    .UseStartup<Startup>();
                 });
     }
 }

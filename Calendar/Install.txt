@@ -1,0 +1,9 @@
+﻿
+1. Uzivatele + prava
+2. Zakaznici
+3. SMS
+4. Typy udalosti do kalendare
+
+{set Calendar as Default project in Package Manager Console head}
+Add-Migration M14 -Context ApplicationDbContext
+Update-Database -Context ApplicationDbContext
