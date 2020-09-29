@@ -9,7 +9,9 @@ app.controller('CalendarCtrl', function ($scope, $http, $timeout) {
     // global init data
     $scope.initData = {};
     $scope.initialized = false;
-    $scope.eventMode = "";
+    $scope.isMobile = false;
+
+    $scope.eventMode = "";          // C = Create, E = Edit, S = Show
     $scope.events = [];
     $scope.weekDayRecords = [];
     $scope.monthDayRecords = [];
@@ -36,6 +38,10 @@ app.controller('CalendarCtrl', function ($scope, $http, $timeout) {
     $scope.initData = function () {
 
         try {
+
+            if ($('#left-banner').css('display') == 'none') {
+                $scope.isMobile = true;
+            }
 
             $scope.initModel();
 
@@ -134,6 +140,13 @@ app.controller('CalendarCtrl', function ($scope, $http, $timeout) {
         });
     };
 
+    $scope.addAllDayEvent = function () {
+    };
+
+    $scope.addEventFromDay = function (halfHour, stylist) {
+        $scope.addEvent($scope.selectedDay, halfHour - 1, stylist);
+    };
+
     $scope.addEvent = function (day, halfHour, stylist) {
 
         $scope.currentEvent = { allDay: false, owner: stylist };
@@ -161,33 +174,39 @@ app.controller('CalendarCtrl', function ($scope, $http, $timeout) {
         }
 
         $scope.eventMode = "C";
+        $scope.showEventModalDialog();
     };
 
-    $scope.hideEvent = function () {
+    $scope.createEvent = function () {
 
-        $scope.currentEvent = null;
-        $scope.eventMode = "";
-    };
-
-    $scope.cancelEvent = function () {
-
-        if ($scope.currentEvent != null) {
-            $scope.eventMode = "S";
-        } else {
-            $scope.eventMode = "";
-        }
-    };
-
-    $scope.saveEvent = function () {
-
-        // send to server
-        $scope.eventMode = "S";
-    };
+        $scope.eventMode = 'C';
+        $scope.showEventModalDialog();
+    }
 
     $scope.editEvent = function () {
 
-        // send to server
         $scope.eventMode = "E";
+        $scope.showEventModalDialog();
+    };
+
+    $scope.showEvent = function () {
+
+        $scope.eventMode = 'S';
+        $scope.showEventModalDialog();
+    }
+
+    $scope.cancelEvent = function () {
+
+        $scope.currentEvent = null;
+        $scope.hideEventModalDialog();
+    };
+
+    $scope.showEventModalDialog = function () {
+        $scope.showEventModal = true;
+    };
+
+    $scope.hideEventModalDialog = function () {
+        $scope.showEventModal = false;
     };
 
     $scope.range = function (min, max, step) {
@@ -302,6 +321,8 @@ app.controller('CalendarCtrl', function ($scope, $http, $timeout) {
                 console.log("saveEvent error: " + JSON.stringify(xhr));
             },
             success: function (data) {
+
+                $scope.hideEventModalDialog();
                 $scope.currentEvent = null;
                 $scope.eventMode = '';
                 $scope.getEvents();
@@ -379,19 +400,6 @@ app.controller('CalendarCtrl', function ($scope, $http, $timeout) {
 
         return ((d1.getDate() == day.day) && ((d1.getMonth() + 1) == day.month) && (d1.getFullYear() == day.year));
     }
-
-    $scope.addAllDayEvent = function () {
-    };
-
-    $scope.addAllWeekEvent = function () {
-    };
-
-    $scope.addAllMonthEvent = function () {
-    };
-
-    $scope.addEventFromDay = function (halfHour, stylist) {
-        $scope.addEvent($scope.selectedDay, halfHour - 1, stylist);
-    };
 
     $scope.customerChanged = function () {
         $scope.currentEvent.customerName = $scope.currentEvent.customer.firstName + " " + $scope.currentEvent.customer.lastName;
