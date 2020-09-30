@@ -23,143 +23,97 @@
         <modal title="Nová rezervace" visible="showEventModal">
             <ng-form id="eventForm" name="eventForm">
 
-                <div ng-if="(eventMode == 'C') || (eventMode == 'E')" class="row">
-                    <div class="col-4">
-                    </div>
-                    <div class="col-4 calendar-button-div">
-                        <div class="clickable calendar-save-event calendar-button" ng-click="$event.preventDefault();saveEvent()">
-                            <i class="fa fa-save" style="color: green; font-size: 14px; margin-right: 5px;"></i><span>Uložit</span>
-                        </div>
-                    </div>
-                    <div class="col-4 calendar-button-div">
-                        <div class="clickable calendar-cancel-event calendar-button" ng-click="$event.preventDefault();cancelEvent()">
-                            <i class="fa fa-cancel" style="color: green; font-size: 14px; margin-right: 5px;"></i><span>Storno</span>
-                        </div>
-                    </div>
-                </div>
-                <div ng-if="(eventMode == 'S')" class="row">
-                    <div class="col-4 calendar-button-div">
-                        <div class="clickable calendar-save-event calendar-button" ng-click="$event.preventDefault();editEvent()">
-                            <i class="fa fa-save" style="color: green; font-size: 14px; margin-right: 5px;"></i><span>Upravit</span>
-                        </div>
-                    </div>
-                    <div class="col-4 calendar-button-div">
-                        <div class="clickable calendar-delete-event calendar-button" ng-click="$event.preventDefault();deleteEvent()">
-                            <i class="fa fa-trash" style="color: green; font-size: 14px; margin-right: 5px;"></i><span>Smazat</span>
-                        </div>
-                    </div>
-                    <div class="col-4 calendar-button-div">
-                        <div class="clickable calendar-hide-event calendar-button" ng-click="$event.preventDefault();cancelEvent()">
-                            <i class="fa fa-eye-slash" style="color: green; font-size: 14px; margin-right: 5px;"></i><span></span>
-                        </div>
-                    </div>
-                </div>
+                <div style="margin: 0 10px;">
 
-                <div ng-if="(eventMode == 'C') || (eventMode == 'E') || (eventMode == 'S')" class="row" style="margin: 10px -25px 0 -25px;">
-                    <div ng-if="((initData.stylists != null) && (initData.stylists.length > 0))" class="form-group col-12">
-                        <label for="owner" class="control-label">Kadeřník</label>
-                        <select ng-if="(eventMode != 'S')" name="owner" id="owner" class="form-control tiny-form-control" style="padding-top: 2px;" ng-model='currentEvent.owner' ng-options='(stylist.name) for stylist in initData.stylists track by stylist.id' ng-change="ownerChanged()"></select>
-                        <input ng-if="(eventMode == 'S')" type="text" name="owner" id="owner" class="form-control tiny-form-control" ng-model='ownerName' readonly>
+                    <div ng-if="(eventMode == 'C') || (eventMode == 'E')" class="row" style="float: right;">
+                        <input type="submit" value="Uložit" class="btn btn-primary" style="margin: 0 2px;" ng-click="$event.preventDefault();saveEvent()" />
+                        <input type="submit" value="Storno" class="btn btn-secondary" style="margin: 0 2px;" ng-click="$event.preventDefault();cancelEvent()" />
                     </div>
-                    <div ng-if="((initData.eventTypes != null) && (initData.eventTypes.length > 0))" class="form-group col-10">
-                        <label for="eventType" class="control-label">Akce</label>
-                        <select ng-if="(eventMode != 'S')" name="eventType" id="eventType" class="form-control tiny-form-control" style="padding-top: 2px;" ng-model='currentEvent.eventType' ng-options='eventType.name for eventType in initData.eventTypes track by eventType.id' ng-change="eventTypeChanged()"></select>
-                        <input ng-if="(eventMode == 'S')" type="text" name="eventType" id="eventType" class="form-control tiny-form-control" ng-model='currentEvent.eventType.name' readonly>
+                    <div ng-if="(eventMode == 'S')" class="row" style="float: right;">
+                        <input type="submit" value="Upravit" class="btn btn-primary" style="margin: 0 2px;" ng-click="$event.preventDefault();editEvent()" />
+                        <input type="submit" value="Smazat" class="btn btn-secondary" style="margin: 0 2px;" ng-click="$event.preventDefault();deleteEvent()" />
+                        <input type="submit" value="Storno" class="btn btn-secondary" style="margin: 0 2px;" ng-click="$event.preventDefault();cancelEvent()" />
                     </div>
-                    <div ng-if="((initData.eventTypes != null) && (initData.eventTypes.length > 0))" class="form-group col-2" style="padding-top: 35px; padding-left: 5px;">
-                        <a title="Upravit seznam akcí" asp-controller="CalendarEventType" asp-action="Index"><i class="fa fa-marker fa-lg"></i></a>
-                    </div>
-                    <div class="form-group col-6">
-                        <label for="eventStart" class="control-label">Začátek</label>
-                        <input type="text" name="eventStart" id="eventStart" class="form-control tiny-form-control" ng-model='eventStart' size="8" bs-timepicker data-length="7" data-placement="bottom" data-use-native="true" data-time-format="HH:mm" data-min-time="08:00" data-max-time="18:00" data-autoclose="1" data-hour-step="1" data-minute-step="15" data-arrow-behavior="pager" ng-readonly="((eventMode == 'S') || (currentEvent.allDay != false))">
-                    </div>
-                    <div class="form-group col-6">
-                        <label for="eventEnd" class="control-label">Konec</label>
-                        <input type="text" name="eventEnd" id="eventEnd" class="form-control tiny-form-control" ng-model='eventEnd' size="8" bs-timepicker data-length="7" data-placement="bottom" data-use-native="true" data-time-format="HH:mm" data-min-time="08:00" data-max-time="18:00" data-autoclose="1" data-hour-step="1" data-minute-step="15" data-arrow-behavior="pager" ng-readonly="((eventMode == 'S') || (currentEvent.allDay != false))">
-                    </div>
-                    <div class="form-group form-check col-12" style="padding-left: 1rem;">
-                        <label for="allDay" class="control-label" style="width: 150px; margin-bottom: 0px;" title="Celodenní">Celodenní akce</label>
-                        <input type='checkbox' name="allDay" id="allDay" class="form-control tiny-form-control" ng-model="currentEvent.allDay" title="Celodenní" style="width: 20px;" ng-readonly="(eventMode == 'S')" />
-                    </div>
-                    <div class="form-group col-10">
-                        <label for="customer" class="control-label">Zákazník</label>
-                        <select ng-if="(eventMode != 'S')" name="customer" id="customer" class="form-control tiny-form-control" style="padding-top: 2px;" ng-model='currentEvent.customer' ng-options='(customer.firstName + " " + customer.lastName) for customer in initData.customers track by customer.id' ng-change="customerChanged()"></select>
-                        <input ng-if="(eventMode == 'S')" type="text" name="customer" id="customer" class="form-control tiny-form-control" ng-model='customerName' readonly>
-                    </div>
-                    <div class="form-group col-2" style="padding-top: 35px; padding-left: 5px;">
-                        <a title="Upravit seznam zákazníků" asp-controller="Customer" asp-action="Index"><i class="fa fa-marker fa-lg"></i></a>
-                    </div>
-                    <div class="form-group col-12">
-                        <label for="customerName" class="control-label" title="Jméno zákazníka">Jméno zákazníka</label>
-                        <input type="text" name="customerName" id="customerName" class="form-control tiny-form-control" ng-model='currentEvent.customerName' ng-readonly="(eventMode == 'S')">
-                    </div>
-                    <div class="form-group col-12">
-                        <label for="customerEmail" class="control-label" title="Email zákazníka">Email zákazníka</label>
-                        <input type="text" name="customerEmail" id="customerEmail" class="form-control tiny-form-control" ng-model='currentEvent.customerEmail' ng-readonly="(eventMode == 'S')">
-                    </div>
-                    <div class="form-group col-12">
-                        <label for="customerPhoneNumber" class="control-label" title="Tel. číslo zákazníka">Tel. číslo zákazníka</label>
-                        <input ng-if="(eventMode == 'S')" type="text" name="customerPhoneNumber" id="customerPhoneNumber" class="form-control tiny-form-control" ng-model='currentEvent.customerPhoneNumber' ng-readonly="(eventMode == 'S')">
-                    </div>
-                    <div class="form-group form-check col-6" style="padding-left: 1rem;">
-                        <label for="sendEmail" class="control-label" style="width: 150px; margin-bottom: 0px;" title="Odeslat Email">Poslat Email</label>
-                        <input ng-if="(eventMode != 'S')" type='checkbox' name="sendEmail" id="sendEmail" class="form-control tiny-form-control" ng-model="currentEvent.sendEmail" title="Odeslat Email" style="width: 20px;" />
-                        <input ng-if="(eventMode == 'S')" type="text" name="sendEmail" id="sendEmail" class="form-control tiny-form-control" ng-model='sendEmailText' readonly>
-                    </div>
-                    <div class="form-group form-check col-6" style="padding-left: 1rem;">
-                        <label for="sendSms" class="control-label" style="width: 150px; margin-bottom: 0px;" title="Odeslat SMS">Poslat SMS</label>
-                        <input ng-if="(eventMode != 'S')" type='checkbox' name="sendSms" id="sendSms" class="form-control tiny-form-control" ng-model="currentEvent.sendSms" title="Odeslat SMS" style="width: 20px;" />
-                        <input ng-if="(eventMode == 'S')" type="text" name="sendSms" id="sendSms" class="form-control tiny-form-control" ng-model='sendSmsText' readonly>
-                    </div>
-                    <div class="form-group col-12">
-                        <label for="note" class="control-label">Poznámka</label>
-                        <textarea ng-if="(eventMode != 'S')" name="note" id="note" class="form-control tiny-form-control" rows="2" cols="50" ng-model='currentEvent.note'></textarea>
-                        <input ng-if="(eventMode == 'S')" type="text" name="note" id="note" class="form-control tiny-form-control" ng-model='currentEvent.note' readonly>
-                    </div>
-                </div>
 
-                <div ng-if="(eventMode == 'C') || (eventMode == 'E')" class="row">
-                    <div class="col-4">
-                    </div>
-                    <div class="col-4 calendar-button-div">
-                        <div class="clickable calendar-save-event calendar-button" ng-click="$event.preventDefault();saveEvent()">
-                            <i class="fa fa-save" style="color: green; font-size: 14px; margin-right: 5px;"></i><span>Uložit</span>
+                    <div ng-if="(eventMode == 'C') || (eventMode == 'E') || (eventMode == 'S')" class="row" style="margin: 10px -25px 0 -25px; float: left;">
+                        <div ng-if="((initData.stylists != null) && (initData.stylists.length > 0))" class="form-group col-12">
+                            <label for="owner" class="control-label">Kadeřník</label>
+                            <select ng-if="(eventMode != 'S')" name="owner" id="owner" class="form-control tiny-form-control" style="padding-top: 2px;" ng-model='currentEvent.owner' ng-options='(stylist.name) for stylist in initData.stylists track by stylist.id' ng-change="ownerChanged()"></select>
+                            <input ng-if="(eventMode == 'S')" type="text" name="owner" id="owner" class="form-control tiny-form-control" ng-model='ownerName' readonly>
+                        </div>
+                        <div ng-if="((initData.eventTypes != null) && (initData.eventTypes.length > 0))" class="form-group col-10">
+                            <label for="eventType" class="control-label">Akce</label>
+                            <select ng-if="(eventMode != 'S')" name="eventType" id="eventType" class="form-control tiny-form-control" style="padding-top: 2px;" ng-model='currentEvent.eventType' ng-options='eventType.name for eventType in initData.eventTypes track by eventType.id' ng-change="eventTypeChanged()"></select>
+                            <input ng-if="(eventMode == 'S')" type="text" name="eventType" id="eventType" class="form-control tiny-form-control" ng-model='currentEvent.eventType.name' readonly>
+                        </div>
+                        <div ng-if="((initData.eventTypes != null) && (initData.eventTypes.length > 0))" class="form-group col-2" style="padding-top: 35px; padding-left: 5px;">
+                            <a title="Upravit seznam akcí" asp-controller="CalendarEventType" asp-action="Index"><i class="fa fa-marker fa-lg"></i></a>
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="eventStart" class="control-label">Začátek</label>
+                            <input type="text" name="eventStart" id="eventStart" class="form-control tiny-form-control" ng-model='eventStart' size="8" bs-timepicker data-length="7" data-placement="bottom" data-use-native="true" data-time-format="HH:mm" data-min-time="08:00" data-max-time="18:00" data-autoclose="1" data-hour-step="1" data-minute-step="15" data-arrow-behavior="pager" ng-readonly="((eventMode == 'S') || (currentEvent.allDay != false))">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="eventEnd" class="control-label">Konec</label>
+                            <input type="text" name="eventEnd" id="eventEnd" class="form-control tiny-form-control" ng-model='eventEnd' size="8" bs-timepicker data-length="7" data-placement="bottom" data-use-native="true" data-time-format="HH:mm" data-min-time="08:00" data-max-time="18:00" data-autoclose="1" data-hour-step="1" data-minute-step="15" data-arrow-behavior="pager" ng-readonly="((eventMode == 'S') || (currentEvent.allDay != false))">
+                        </div>
+                        <div class="form-group form-check col-12" style="padding-left: 1rem;">
+                            <label for="allDay" class="control-label" style="width: 150px; margin-bottom: 0px;" title="Celodenní">Celodenní akce</label>
+                            <input type='checkbox' name="allDay" id="allDay" class="form-control tiny-form-control" ng-model="currentEvent.allDay" title="Celodenní" style="width: 20px;" ng-readonly="(eventMode == 'S')" />
+                        </div>
+                        <div class="form-group col-10">
+                            <label for="customer" class="control-label">Zákazník</label>
+                            <select ng-if="(eventMode != 'S')" name="customer" id="customer" class="form-control tiny-form-control" style="padding-top: 2px;" ng-model='currentEvent.customer' ng-options='(customer.firstName + " " + customer.lastName) for customer in initData.customers track by customer.id' ng-change="customerChanged()"></select>
+                            <input ng-if="(eventMode == 'S')" type="text" name="customer" id="customer" class="form-control tiny-form-control" ng-model='customerName' readonly>
+                        </div>
+                        <div class="form-group col-2" style="padding-top: 35px; padding-left: 5px;">
+                            <a title="Upravit seznam zákazníků" asp-controller="Customer" asp-action="Index"><i class="fa fa-marker fa-lg"></i></a>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="customerName" class="control-label" title="Jméno zákazníka">Jméno zákazníka</label>
+                            <input type="text" name="customerName" id="customerName" class="form-control tiny-form-control" ng-model='currentEvent.customerName' ng-readonly="(eventMode == 'S')">
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="customerEmail" class="control-label" title="Email zákazníka">Email zákazníka</label>
+                            <input type="text" name="customerEmail" id="customerEmail" class="form-control tiny-form-control" ng-model='currentEvent.customerEmail' ng-readonly="(eventMode == 'S')">
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="customerPhoneNumber" class="control-label" title="Tel. číslo zákazníka">Tel. číslo zákazníka</label>
+                            <input type="text" name="customerPhoneNumber" id="customerPhoneNumber" class="form-control tiny-form-control" ng-model='currentEvent.customerPhoneNumber' ng-readonly="(eventMode == 'S')">
+                        </div>
+                        <div class="form-group form-check col-6" style="padding-left: 1rem;">
+                            <label for="sendEmail" class="control-label" style="width: 150px; margin-bottom: 0px;" title="Odeslat Email">Poslat Email</label>
+                            <input ng-if="(eventMode != 'S')" type='checkbox' name="sendEmail" id="sendEmail" class="form-control tiny-form-control" ng-model="currentEvent.sendEmail" title="Odeslat Email" style="width: 20px;" />
+                            <input ng-if="(eventMode == 'S')" type="text" name="sendEmail" id="sendEmail" class="form-control tiny-form-control" ng-model='sendEmailText' readonly>
+                        </div>
+                        <div class="form-group form-check col-6" style="padding-left: 1rem;">
+                            <label for="sendSms" class="control-label" style="width: 150px; margin-bottom: 0px;" title="Odeslat SMS">Poslat SMS</label>
+                            <input ng-if="(eventMode != 'S')" type='checkbox' name="sendSms" id="sendSms" class="form-control tiny-form-control" ng-model="currentEvent.sendSms" title="Odeslat SMS" style="width: 20px;" />
+                            <input ng-if="(eventMode == 'S')" type="text" name="sendSms" id="sendSms" class="form-control tiny-form-control" ng-model='sendSmsText' readonly>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="note" class="control-label">Poznámka</label>
+                            <textarea ng-if="(eventMode != 'S')" name="note" id="note" class="form-control tiny-form-control" rows="2" cols="50" ng-model='currentEvent.note'></textarea>
+                            <input ng-if="(eventMode == 'S')" type="text" name="note" id="note" class="form-control tiny-form-control" ng-model='currentEvent.note' readonly>
                         </div>
                     </div>
-                    <div class="col-4 calendar-button-div">
-                        <div class="clickable calendar-cancel-event calendar-button" ng-click="$event.preventDefault();cancelEvent()">
-                            <i class="fa fa-cancel" style="color: green; font-size: 14px; margin-right: 5px;"></i><span>Storno</span>
-                        </div>
+
+                    <div ng-if="(eventMode == 'C') || (eventMode == 'E')" class="row" style="float: right;">
+                        <input type="submit" value="Uložit" class="btn btn-primary" style="margin: 0 2px;" ng-click="$event.preventDefault();saveEvent()" />
+                        <input type="submit" value="Storno" class="btn btn-secondary" style="margin: 0 2px;" ng-click="$event.preventDefault();cancelEvent()" />
                     </div>
-                </div>
-                <div ng-if="(eventMode == 'S')" class="row">
-                    <div class="col-4 calendar-button-div">
-                        <div class="clickable calendar-save-event calendar-button" ng-click="$event.preventDefault();editEvent()">
-                            <i class="fa fa-save" style="color: green; font-size: 14px; margin-right: 5px;"></i><span>Upravit</span>
-                        </div>
-                    </div>
-                    <div class="col-4 calendar-button-div">
-                        <div class="clickable calendar-delete-event calendar-button" ng-click="$event.preventDefault();deleteEvent()">
-                            <i class="fa fa-trash" style="color: green; font-size: 14px; margin-right: 5px;"></i><span>Smazat</span>
-                        </div>
-                    </div>
-                    <div class="col-4 calendar-button-div">
-                        <div class="clickable calendar-hide-event calendar-button" ng-click="$event.preventDefault();cancelEvent()">
-                            <i class="fa fa-eye-slash" style="color: green; font-size: 14px; margin-right: 5px;"></i><span></span>
-                        </div>
+                    <div ng-if="(eventMode == 'S')" class="row" style="float: right;">
+                        <input type="submit" value="Upravit" class="btn btn-primary" style="margin: 0 2px;" ng-click="$event.preventDefault();editEvent()" />
+                        <input type="submit" value="Smazat" class="btn btn-secondary" style="margin: 0 2px;" ng-click="$event.preventDefault();deleteEvent()" />
+                        <input type="submit" value="Storno" class="btn btn-secondary" style="margin: 0 2px;" ng-click="$event.preventDefault();cancelEvent()" />
                     </div>
                 </div>
 
             </ng-form>
         </modal>
 
-        <div id="calendar-user-row" class="row title-row" style="display: none;">
-            <div class="col-3"></div>
-            <div class="col-3"><span>Uživatel: {{initData.user}}</span></div>
-            <div class="col-6"></div>
-        </div>
         <div id="calendar-data-row" class="row" style="margin-bottom: 15px; height: 1100px; display: none;">
-            <div id="left-banner" class="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12">
+            <div id="left-banner" class="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-xs-12 col-12">
                 <div class="row">
                     <div class="col-12 calendar-selector">
                         <div class="row" style="margin-bottom: 1px;">
@@ -189,10 +143,17 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-12 col-12 calendar-field-div">
+            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-12 col-xs-12 col-12 calendar-field-div">
                 <div class="row calendar-field" style="height: 25px; margin-bottom: 1px;">
-                    <div class="col-1">
+                    <div class="col-1"></div>
+                    <div ng-repeat="(stylistIndex, stylist) in initData.stylists" class="col-auto" style="display: inline-flex; padding: 0 5px;">
+                        <input type='checkbox' ng-model="stylist.selected" ng-change="stylistSelectedChanged()" title="{{stylist.name}}" style="width: 20px;" />
+                        <span style="font-size: 12px; margin-left: 5px;">{{stylist.name}}</span>
                     </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row calendar-field" style="height: 25px; margin-bottom: 1px;">
+                    <div class="col-1 timing-col">&nbsp;</div>
                     <div class="col-11">
                         <div class="row" style="height: 100%;">
                             <div class="bordered single-day"><span style="font-size: 14px;">{{selectedDay.day}}.{{selectedDay.month}}.{{selectedDay.year}}</span></div>
@@ -200,31 +161,39 @@
                     </div>
                 </div>
                 <div class="row calendar-field-common" style="height: 25px; margin-bottom: 1px;">
-                    <div class="col-1"></div>
+                    <div class="col-1 timing-col">&nbsp;</div>
                     <div class="col-11 no-padding">
-                        <div class="bordered clickable" style="width: 100%; height: 100%;" ng-click="addAllDayEvent()">
+                        <div class="bordered clickable" style="width: 100%; height: 100%; text-align: center; padding-top: 3px;" ng-click="addAllDayEvent()">
+                            <span style="color: lightgray;">Celodenní události</span>
                         </div>
                     </div>
                 </div>
-                <div class="row calendar-field-common" style="height: 25px; margin-bottom: 1px;">
-                    <div class="col-1"></div>
+                <div class="row calendar-field-common" style="margin-bottom: 1px;">
+                    <div class="col-1 timing-col">&nbsp;</div>
                     <div class="col-11 no-padding">
                         <div class="row" style="width: 100%; height: 100%; margin: 0; text-align: center;">
-                            <div ng-repeat="(stylistIndex, stylist) in initData.stylists" class="bordered" style="width: {{(100 / initData.stylists.length)}}% !important; padding-top: 3px;"><span>{{stylist.name}}</span></div>
+                            <div ng-repeat="(stylistIndex, stylist) in initData.stylists | filter:{ selected: true }" class="bordered" style="width: {{(100 / selectedStylistsCount)}}% !important; padding-top: 3px;">
+                                <span>{{stylist.name}}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row calendar-field" style="height: 900px;">
-                    <div class="col-1 timing-col">
+                    <div class="d-none d-lg-block col-1 timing-col">
                         <div ng-repeat="n in range(1, 16)" class="row timing-row bordered">
                             <span class="timing-title">{{(n + 6)}}:00</span>
                         </div>
                     </div>
+                    <div class="d-block d-lg-none col-1 timing-col">
+                        <div ng-repeat="n in range(1, 16)" class="row timing-row bordered">
+                            <span class="timing-title">{{(n + 6)}}</span>
+                        </div>
+                    </div>
                     <div class="col-11 no-padding">
                         <div ng-repeat="n in range(1, 32)" class="row field-row">
-                            <div ng-repeat="(stylistIndex, stylist) in initData.stylists" class="bordered clickable single-day" ng-class="{saturday: (weekDayRecord.day.dayOfWeek == 6), sunday: (weekDayRecord.day.dayOfWeek == 0)}" ng-click="addEventFromDay(n, stylist)" style="width: {{(100 / initData.stylists.length)}}% !important;"></div>
+                            <div ng-repeat="(stylistIndex, stylist) in initData.stylists | filter:{ selected: true }" class="bordered clickable single-day" ng-class="{saturday: (weekDayRecord.day.dayOfWeek == 6), sunday: (weekDayRecord.day.dayOfWeek == 0)}" ng-click="addEventFromDay(n, stylist)" style="width: {{(100 / selectedStylistsCount)}}% !important;"></div>
                         </div>
-                        <div ng-repeat="event in events | filter: dayEventFilter" class="row clickable" ng-click="showEventDetail(event)" style="position: absolute; top: {{(getTopMinutes(event))}}px; left: {{(getStylistIndex(event) * (100 / initData.stylists.length))}}%; width: {{(100 / initData.stylists.length)}}%; height: {{(getHeightMinutes(event))}}px; z-index: {{(200 + $index)}}; background-color: {{event.owner.defaultColor}}; margin: 0; border: 1px solid black;">
+                        <div ng-repeat="event in events | filter: dayEventFilter" class="row clickable" ng-click="showEventDetail(event)" style="position: absolute; top: {{(getTopMinutes(event))}}px; left: {{(getStylistIndex(event) * (100 / selectedStylistsCount))}}%; width: {{(100 / initData.stylists.length)}}%; height: {{(getHeightMinutes(event))}}px; z-index: {{(200 + $index)}}; background-color: {{event.owner.defaultColor}}; margin: 0; border: 1px solid black;">
                             <div class="col-12" style="padding: 2px 0 0 10px; font-size: 14px;">
                                 <table>
                                     <tr><td>{{(getCustomerName(event))}}</td></tr>

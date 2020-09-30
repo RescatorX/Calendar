@@ -77,7 +77,7 @@ namespace Calendar.Controllers
             model.MonthDays = DateTime.DaysInMonth(year, month);
             model.Weeks = weeks;
             model.Users = _db.Users.Include(u => u.UserRoles).Where(u => u.UserRoles.Any(r => ((r.User == u) && (r.Role.Name.Equals("Admin"))))).Select(u => new UserEntity() { Id = u.Id.ToString("D"), Name = $"{u.FirstName} {u.LastName}", Email = u.Email }).ToArray();
-            model.Stylists = _db.Users.Include(u => u.UserRoles).Where(u => u.UserRoles.Any(r => ((r.User == u) && (r.Role.Name.Equals("Stylist"))))).Select(u => new UserEntity() { Id = u.Id.ToString("D"), Name = $"{u.FirstName} {u.LastName}", Email = u.Email }).ToArray();
+            model.Stylists = _db.Users.Include(u => u.UserRoles).Where(u => u.UserRoles.Any(r => ((r.User == u) && (r.Role.Name.Equals("Stylist"))))).Select(u => new UserEntity() { Id = u.Id.ToString("D"), Name = $"{u.FirstName}", Email = u.Email, Selected = true }).ToArray();
             model.Customers = _db.Customers.ToArray();
             model.EventTypes = _db.CalendarEventTypes.ToArray();
             model.Statuses = ((EventStatus[])Enum.GetValues(typeof(EventStatus))).Select(es => new RegisterEntity() { Id = (int)es, Name = es.ToString() }).ToArray();

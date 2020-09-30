@@ -116,5 +116,8 @@ namespace Calendar.Models.CalendarViewModels
 
         [DataMember(Name = "email", Order = 3)]
         public string Email { get; set; }
+
+        [DataMember(Name = "selected", Order = 4)]
+        public bool Selected { get; set; }
     }
 }

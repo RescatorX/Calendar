@@ -127,13 +127,15 @@ namespace Calendar.Data
                 throw new Exception("PrefillDatabase - Roles table prefill error: " + e.Message, e);
             }
 
-            List<ApplicationUserClaim> adminUserClaims = new List<ApplicationUserClaim>();
-            List<ApplicationUserToken> adminUserTokens = new List<ApplicationUserToken>();
-            List<ApplicationUserRole> adminUserRoles = new List<ApplicationUserRole>();
+            List<ApplicationUserClaim> userClaims = new List<ApplicationUserClaim>();
+            List<ApplicationUserToken> userTokens = new List<ApplicationUserToken>();
+            List<ApplicationUserRole> userRoles = new List<ApplicationUserRole>();
 
             ApplicationUser adminUser1 = null;
             ApplicationUser adminUser2 = null;
             ApplicationUser adminUser3 = null;
+            ApplicationUser stylistUser4 = null;
+            ApplicationUser stylistUser5 = null;
             try
             {
                 adminUser1 = new ApplicationUser()
@@ -151,9 +153,9 @@ namespace Calendar.Data
                     PhoneNumber = "123456789",
                     PhoneNumberConfirmed = true,
                     AccessFailedCount = 0,
-                    Claims = adminUserClaims,
-                    UserRoles = adminUserRoles,
-                    Tokens = adminUserTokens,
+                    Claims = userClaims,
+                    UserRoles = userRoles,
+                    Tokens = userTokens,
                     PasswordHash = Constants.DefaultAdminPassword.ComputeSHA256Hash(),
                     Created = DateTime.Now,
                     Status = UserStatus.Verified,
@@ -176,9 +178,9 @@ namespace Calendar.Data
                     PhoneNumber = "987654321",
                     PhoneNumberConfirmed = true,
                     AccessFailedCount = 0,
-                    Claims = adminUserClaims,
-                    UserRoles = adminUserRoles,
-                    Tokens = adminUserTokens,
+                    Claims = userClaims,
+                    UserRoles = userRoles,
+                    Tokens = userTokens,
                     PasswordHash = Constants.DefaultAdminPassword.ComputeSHA256Hash(),
                     Created = DateTime.Now,
                     Status = UserStatus.Verified,
@@ -201,15 +203,65 @@ namespace Calendar.Data
                     PhoneNumber = "666555444",
                     PhoneNumberConfirmed = true,
                     AccessFailedCount = 0,
-                    Claims = adminUserClaims,
-                    UserRoles = adminUserRoles,
-                    Tokens = adminUserTokens,
+                    Claims = userClaims,
+                    UserRoles = userRoles,
+                    Tokens = userTokens,
                     PasswordHash = Constants.DefaultAdminPassword.ComputeSHA256Hash(),
                     Created = DateTime.Now,
                     Status = UserStatus.Verified,
                     DefaultColor = "pink"
                 };
                 modelBuilder.Entity<ApplicationUser>().HasData(adminUser3);
+
+                stylistUser4 = new ApplicationUser()
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Iveta",
+                    LastName = "Iveta",
+                    UserName = "iiveta",
+                    NormalizedUserName = "IIVETA",
+                    Email = "iveta.iveta@seznam.cz",
+                    NormalizedEmail = "IVETA.IVETA@SEZNAM.CZ",
+                    EmailConfirmed = true,
+                    Logins = null,
+                    TwoFactorEnabled = false,
+                    PhoneNumber = "777888999",
+                    PhoneNumberConfirmed = true,
+                    AccessFailedCount = 0,
+                    Claims = userClaims,
+                    UserRoles = userRoles,
+                    Tokens = userTokens,
+                    PasswordHash = Constants.DefaultAdminPassword.ComputeSHA256Hash(),
+                    Created = DateTime.Now,
+                    Status = UserStatus.Verified,
+                    DefaultColor = "yellow"
+                };
+                modelBuilder.Entity<ApplicationUser>().HasData(stylistUser4);
+
+                stylistUser5 = new ApplicationUser()
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Michal",
+                    LastName = "Michal",
+                    UserName = "mmichal",
+                    NormalizedUserName = "MMICHAL",
+                    Email = "michal.michal@seznam.cz",
+                    NormalizedEmail = "MICHAL.MICHAL@SEZNAM.CZ",
+                    EmailConfirmed = true,
+                    Logins = null,
+                    TwoFactorEnabled = false,
+                    PhoneNumber = "111222333",
+                    PhoneNumberConfirmed = true,
+                    AccessFailedCount = 0,
+                    Claims = userClaims,
+                    UserRoles = userRoles,
+                    Tokens = userTokens,
+                    PasswordHash = Constants.DefaultAdminPassword.ComputeSHA256Hash(),
+                    Created = DateTime.Now,
+                    Status = UserStatus.Verified,
+                    DefaultColor = "green"
+                };
+                modelBuilder.Entity<ApplicationUser>().HasData(stylistUser5);
             }
             catch (Exception e)
             {
@@ -249,6 +301,22 @@ namespace Calendar.Data
                     Added = DateTime.Now
                 };
                 modelBuilder.Entity<ApplicationUserRole>().HasData(stylistUserRole2);
+
+                ApplicationUserRole stylistUserRole3 = new ApplicationUserRole()
+                {
+                    UserId = stylistUser4.Id,
+                    RoleId = stylistRole.Id,
+                    Added = DateTime.Now
+                };
+                modelBuilder.Entity<ApplicationUserRole>().HasData(stylistUserRole3);
+
+                ApplicationUserRole stylistUserRole4 = new ApplicationUserRole()
+                {
+                    UserId = stylistUser5.Id,
+                    RoleId = stylistRole.Id,
+                    Added = DateTime.Now
+                };
+                modelBuilder.Entity<ApplicationUserRole>().HasData(stylistUserRole4);
             }
             catch (Exception e)
             {

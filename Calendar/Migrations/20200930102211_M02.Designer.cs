@@ -4,14 +4,16 @@ using Calendar.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Calendar.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200930102211_M02")]
+    partial class M02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,73 +142,73 @@ namespace Calendar.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("35bcf96a-a7b8-4952-9596-7c9fbbb057f8"),
+                            Id = new Guid("e4a9ed74-0a95-4dee-99e8-02c0386bed5d"),
                             Color = "lightgreen",
                             Name = "F"
                         },
                         new
                         {
-                            Id = new Guid("8e61e931-0ed3-4bcd-aff8-b46e1f6cc476"),
+                            Id = new Guid("9c37d3ac-3b57-40c6-9710-6edfc2ba197c"),
                             Color = "lightblue",
                             Name = "PS"
                         },
                         new
                         {
-                            Id = new Guid("86e2c4f4-8149-4c10-8d34-09098a7c4dff"),
+                            Id = new Guid("134e7506-e905-4527-9280-6239f5540280"),
                             Color = "yellow",
                             Name = "SF"
                         },
                         new
                         {
-                            Id = new Guid("3701d747-e546-4272-bc44-3e1c80bc2c71"),
+                            Id = new Guid("873e54c1-e758-406a-8786-a9cd482bfd7d"),
                             Color = "pink",
                             Name = "BF"
                         },
                         new
                         {
-                            Id = new Guid("54639082-9dff-428d-9fb0-28c528aa34bf"),
+                            Id = new Guid("0253df6e-77fc-4cd0-a77f-3019bb4ca5c5"),
                             Color = "orange",
                             Name = "BSF"
                         },
                         new
                         {
-                            Id = new Guid("29f82be0-5f48-4ac9-aa76-bc00dd4507fb"),
+                            Id = new Guid("9de04db1-7ed8-473d-a531-2f0a4044089c"),
                             Color = "brown",
                             Name = "MF"
                         },
                         new
                         {
-                            Id = new Guid("a592ee31-d662-45e9-bbcc-c46b8a48dff4"),
+                            Id = new Guid("0cee543d-aef7-4b25-975f-07179df27537"),
                             Color = "blue",
                             Name = "MSF"
                         },
                         new
                         {
-                            Id = new Guid("a38cc313-bbef-4143-8915-b9242bc143e2"),
+                            Id = new Guid("679d74cd-f790-4927-b6e3-b383b6ac5cea"),
                             Color = "green",
                             Name = "TONER"
                         },
                         new
                         {
-                            Id = new Guid("15780fe4-ef61-4415-bd1a-696133eb3c29"),
+                            Id = new Guid("034a2d2a-d5d6-48a5-a76a-5eef35da93ef"),
                             Color = "magenta",
                             Name = "AGÁVE"
                         },
                         new
                         {
-                            Id = new Guid("8704d57e-38bf-45d4-bfe9-e34315adab54"),
+                            Id = new Guid("f5f500b0-3c71-490f-bac0-a757c58de99e"),
                             Color = "red",
                             Name = "KONZULTACE"
                         },
                         new
                         {
-                            Id = new Guid("ba55b21c-eac8-440d-be6f-8ea971ede553"),
+                            Id = new Guid("5a52d99b-ac05-409e-abd2-668a80e6be50"),
                             Color = "cyan",
                             Name = "VÝČES"
                         },
                         new
                         {
-                            Id = new Guid("89387522-843b-4aee-98b3-75ac1c80c1e8"),
+                            Id = new Guid("e7d69b69-13ad-44f5-b291-f6c4f4b186bc"),
                             Color = "lightbrown",
                             Name = "JINÉ"
                         });
@@ -291,8 +293,8 @@ namespace Calendar.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("35e5d761-1ab6-4730-b68e-00f0430eec71"),
-                            ConcurrencyStamp = "3cbe5c50-ec8e-4fa5-9c11-83910c5d14b6",
+                            Id = new Guid("36c1d130-1233-42e4-a732-c33cc648331a"),
+                            ConcurrencyStamp = "4aa87eaf-7cd5-4b34-8b64-0f46c57b3cc0",
                             Description = "Administrators role",
                             Name = "Admin",
                             NormalizedName = "ADMIN",
@@ -300,8 +302,8 @@ namespace Calendar.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1c0818b6-bde5-484d-a424-200c2af2fda2"),
-                            ConcurrencyStamp = "54702b6c-f334-4900-80ec-8fb5ed3a766a",
+                            Id = new Guid("9ceb321f-0a0b-4a45-9f45-2c2a17da761a"),
+                            ConcurrencyStamp = "9dbc935b-fdb4-4da7-b4c6-6a75452c074e",
                             Description = "Stylists role",
                             Name = "Stylist",
                             NormalizedName = "STYLIST",
@@ -415,10 +417,10 @@ namespace Calendar.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("88033fb6-de8d-46c9-a7c1-c9902e29b39b"),
+                            Id = new Guid("93b8792c-2cd6-4a75-9f96-1fa8aab99660"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8efb102c-e1d6-47ce-96b5-88d0ac54f924",
-                            Created = new DateTime(2020, 9, 30, 12, 26, 4, 442, DateTimeKind.Local).AddTicks(1494),
+                            ConcurrencyStamp = "62c67ae3-55b5-411c-8502-ce6b8269c6f9",
+                            Created = new DateTime(2020, 9, 30, 12, 22, 11, 55, DateTimeKind.Local).AddTicks(8689),
                             DefaultColor = "lightgreen",
                             Email = "xkalinam@email.cz",
                             EmailConfirmed = true,
@@ -436,10 +438,10 @@ namespace Calendar.Migrations
                         },
                         new
                         {
-                            Id = new Guid("30fe9cb3-bfb7-4ecf-8e16-2e01e3ad92c5"),
+                            Id = new Guid("57e9c5c9-0995-45ab-b5c3-bf4373533462"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8fbad38b-233f-4a23-bd86-5a01d9e08cc7",
-                            Created = new DateTime(2020, 9, 30, 12, 26, 4, 444, DateTimeKind.Local).AddTicks(4117),
+                            ConcurrencyStamp = "687c82a8-abf7-4628-b02e-bbc099e66ca6",
+                            Created = new DateTime(2020, 9, 30, 12, 22, 11, 58, DateTimeKind.Local).AddTicks(488),
                             DefaultColor = "lightblue",
                             Email = "jiri.pragr@seznam.cz",
                             EmailConfirmed = true,
@@ -457,10 +459,10 @@ namespace Calendar.Migrations
                         },
                         new
                         {
-                            Id = new Guid("aac3a6a0-c971-4fea-aed2-790ed9b7a6de"),
+                            Id = new Guid("c9ed137c-6333-4246-8c24-680a5e61eaa2"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3e0d9628-f18f-4f4b-bc85-1d57e41abf07",
-                            Created = new DateTime(2020, 9, 30, 12, 26, 4, 444, DateTimeKind.Local).AddTicks(4293),
+                            ConcurrencyStamp = "de2d987c-d190-48c2-9977-5237b0df2040",
+                            Created = new DateTime(2020, 9, 30, 12, 22, 11, 58, DateTimeKind.Local).AddTicks(652),
                             DefaultColor = "pink",
                             Email = "sandra.nisterova@seznam.cz",
                             EmailConfirmed = true,
@@ -478,10 +480,10 @@ namespace Calendar.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3546d9ac-94bf-4bc0-95aa-c44b83e95a55"),
+                            Id = new Guid("2647f5d5-f29a-4b26-9066-a8a6625f867e"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "433e661a-d55d-491f-babf-ef19df6f6c84",
-                            Created = new DateTime(2020, 9, 30, 12, 26, 4, 444, DateTimeKind.Local).AddTicks(4363),
+                            ConcurrencyStamp = "b34b2704-1110-40dc-b59f-67933236c547",
+                            Created = new DateTime(2020, 9, 30, 12, 22, 11, 58, DateTimeKind.Local).AddTicks(751),
                             DefaultColor = "yellow",
                             Email = "iveta.iveta@seznam.cz",
                             EmailConfirmed = true,
@@ -499,10 +501,10 @@ namespace Calendar.Migrations
                         },
                         new
                         {
-                            Id = new Guid("54a3bc4b-11f6-4bb4-b533-39ceac4dafb2"),
+                            Id = new Guid("eb5875cd-35df-4638-a7c3-6d8bc0ff0188"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c762a28b-6eeb-484d-9f2f-58ae64c47970",
-                            Created = new DateTime(2020, 9, 30, 12, 26, 4, 444, DateTimeKind.Local).AddTicks(4422),
+                            ConcurrencyStamp = "0e62101d-ac4e-457a-978f-8bd0b5221e8d",
+                            Created = new DateTime(2020, 9, 30, 12, 22, 11, 58, DateTimeKind.Local).AddTicks(816),
                             DefaultColor = "green",
                             Email = "michal.michal@seznam.cz",
                             EmailConfirmed = true,
@@ -584,39 +586,27 @@ namespace Calendar.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("88033fb6-de8d-46c9-a7c1-c9902e29b39b"),
-                            RoleId = new Guid("35e5d761-1ab6-4730-b68e-00f0430eec71"),
-                            Added = new DateTime(2020, 9, 30, 12, 26, 4, 444, DateTimeKind.Local).AddTicks(6965)
+                            UserId = new Guid("93b8792c-2cd6-4a75-9f96-1fa8aab99660"),
+                            RoleId = new Guid("36c1d130-1233-42e4-a732-c33cc648331a"),
+                            Added = new DateTime(2020, 9, 30, 12, 22, 11, 58, DateTimeKind.Local).AddTicks(3188)
                         },
                         new
                         {
-                            UserId = new Guid("30fe9cb3-bfb7-4ecf-8e16-2e01e3ad92c5"),
-                            RoleId = new Guid("35e5d761-1ab6-4730-b68e-00f0430eec71"),
-                            Added = new DateTime(2020, 9, 30, 12, 26, 4, 444, DateTimeKind.Local).AddTicks(7627)
+                            UserId = new Guid("57e9c5c9-0995-45ab-b5c3-bf4373533462"),
+                            RoleId = new Guid("36c1d130-1233-42e4-a732-c33cc648331a"),
+                            Added = new DateTime(2020, 9, 30, 12, 22, 11, 58, DateTimeKind.Local).AddTicks(3840)
                         },
                         new
                         {
-                            UserId = new Guid("30fe9cb3-bfb7-4ecf-8e16-2e01e3ad92c5"),
-                            RoleId = new Guid("1c0818b6-bde5-484d-a424-200c2af2fda2"),
-                            Added = new DateTime(2020, 9, 30, 12, 26, 4, 444, DateTimeKind.Local).AddTicks(7679)
+                            UserId = new Guid("57e9c5c9-0995-45ab-b5c3-bf4373533462"),
+                            RoleId = new Guid("9ceb321f-0a0b-4a45-9f45-2c2a17da761a"),
+                            Added = new DateTime(2020, 9, 30, 12, 22, 11, 58, DateTimeKind.Local).AddTicks(3892)
                         },
                         new
                         {
-                            UserId = new Guid("aac3a6a0-c971-4fea-aed2-790ed9b7a6de"),
-                            RoleId = new Guid("1c0818b6-bde5-484d-a424-200c2af2fda2"),
-                            Added = new DateTime(2020, 9, 30, 12, 26, 4, 444, DateTimeKind.Local).AddTicks(7702)
-                        },
-                        new
-                        {
-                            UserId = new Guid("3546d9ac-94bf-4bc0-95aa-c44b83e95a55"),
-                            RoleId = new Guid("1c0818b6-bde5-484d-a424-200c2af2fda2"),
-                            Added = new DateTime(2020, 9, 30, 12, 26, 4, 444, DateTimeKind.Local).AddTicks(7726)
-                        },
-                        new
-                        {
-                            UserId = new Guid("54a3bc4b-11f6-4bb4-b533-39ceac4dafb2"),
-                            RoleId = new Guid("1c0818b6-bde5-484d-a424-200c2af2fda2"),
-                            Added = new DateTime(2020, 9, 30, 12, 26, 4, 444, DateTimeKind.Local).AddTicks(7750)
+                            UserId = new Guid("c9ed137c-6333-4246-8c24-680a5e61eaa2"),
+                            RoleId = new Guid("9ceb321f-0a0b-4a45-9f45-2c2a17da761a"),
+                            Added = new DateTime(2020, 9, 30, 12, 22, 11, 58, DateTimeKind.Local).AddTicks(3915)
                         });
                 });
 
@@ -643,14 +633,14 @@ namespace Calendar.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("88033fb6-de8d-46c9-a7c1-c9902e29b39b"),
+                            UserId = new Guid("93b8792c-2cd6-4a75-9f96-1fa8aab99660"),
                             LoginProvider = "CalendarLoginProvider",
                             Name = "Token1",
                             Value = "Token1"
                         },
                         new
                         {
-                            UserId = new Guid("30fe9cb3-bfb7-4ecf-8e16-2e01e3ad92c5"),
+                            UserId = new Guid("57e9c5c9-0995-45ab-b5c3-bf4373533462"),
                             LoginProvider = "CalendarLoginProvider",
                             Name = "Token2",
                             Value = "Token2"

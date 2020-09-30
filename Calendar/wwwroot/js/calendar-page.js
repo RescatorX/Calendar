@@ -13,6 +13,8 @@ app.controller('CalendarCtrl', function ($scope, $http, $timeout) {
 
     $scope.eventMode = "";          // C = Create, E = Edit, S = Show
     $scope.events = [];
+    $scope.selectedStylists = [];
+    $scope.selectedStylistsCount = 0;
     $scope.weekDayRecords = [];
     $scope.monthDayRecords = [];
     $scope.pixelsToMinute = 1;
@@ -64,6 +66,12 @@ app.controller('CalendarCtrl', function ($scope, $http, $timeout) {
                 $scope.monthDays = $scope.initData.monthDays;
                 $scope.selectorRows = $scope.initData.weeks;
                 $scope.selectedDay = null;
+                $scope.selectedStylistsCount = 0;
+                angular.forEach($scope.initData.stylists, function (stylist) {
+                    if (stylist.selected) {
+                        $scope.selectedStylistsCount++;
+                    }
+                });
                 for (var i = 0; i < $scope.selectorRows.length; i++) {
                     var week = $scope.selectorRows[i];
                     var found = false;
@@ -421,6 +429,16 @@ app.controller('CalendarCtrl', function ($scope, $http, $timeout) {
         });
         return result;
     };
+
+    $scope.stylistSelectedChanged = function () {
+
+        $scope.selectedStylistsCount = 0;
+        angular.forEach($scope.initData.stylists, function (stylist) {
+            if (stylist.selected) {
+                $scope.selectedStylistsCount++;
+            }
+        });
+    }
 
     $scope.initData();
 
